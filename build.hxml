@@ -1,0 +1,3 @@
+-lua build/modmain.lua
+-main Main.hx
+-dce full
