@@ -8,9 +8,11 @@ extern class GLOBAL {
 @:native("GLOBAL")
 extern class Placeholder {
 	static public function debuglocals(level : Int) : String;
+	static public var PMFG : Class<PickMeatFirstGlobals>;
 }
 
 @:keep
+//@:native("_G.PickMeatFirstGlobals")
 class PickMeatFirstGlobals {
 	static public function test():Void {
 		trace(Placeholder.debuglocals(2)); 
@@ -22,14 +24,6 @@ class Main
 	private static var isMaster : Bool = false;
 	//private static var PlayerController;
 
-	public static function log(s : String)
-	{
-		untyped __lua__("GLOBAL.PickMeatFirstGlobals = PickMeatFirstGlobals");
-		#if debug
-			trace("MikesPlugin: " + s);
-		#end
-	}
-	
 	public static function main() 
 	{
 		Macro.dontStarvePreInit();
@@ -46,6 +40,20 @@ class Main
 			
 			// enable Debug Tools methods
 			GLOBAL.require("debugtools");
+		#end
+		
+
+		//untyped __lua__("GLOBAL.PickMeatFirstGlobals = PickMeatFirstGlobals");
+		//Placeholder.PMFG = PickMeatFirstGlobals;
+		//untyped __lua__("local GLOBAL.PickMeatFirstGlobals = PickMeatFirstGlobals");
+		untyped __lua__("rawset(GLOBAL, \"PickMeatFirstGlobals\", PickMeatFirstGlobals)");
+		
+	}
+	
+	public static function log(s : String)
+	{
+		#if debug
+			trace("MikesPlugin: " + s);
 		#end
 	}
 }

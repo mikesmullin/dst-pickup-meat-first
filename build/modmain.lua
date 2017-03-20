@@ -536,22 +536,21 @@ Date.prototype = _hx_anon(
 PickMeatFirstGlobals.new = {}
 PickMeatFirstGlobals.__name__ = true
 PickMeatFirstGlobals.test = function() 
-  haxe.Log.trace(GLOBAL.debuglocals(2),_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=16,className="PickMeatFirstGlobals",methodName="test"}));
+	print(GLOBAL.dumptable(GLOBAL));
 end
-
 
 Main.new = {}
 Main.__name__ = true
-Main.log = function(s) 
-  GLOBAL.PickMeatFirstGlobals = PickMeatFirstGlobals;
-  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=29,className="Main",methodName="log"}));
-end
 Main.main = function() 
   Main.log("main() starting up...");
   Main.log("debug mode is enabled.");
   GLOBAL.CHEATS_ENABLED = true;
   GLOBAL.require("debugkeys");
   GLOBAL.require("debugtools");
+  rawset(GLOBAL, "PickMeatFirstGlobals", PickMeatFirstGlobals);
+end
+Main.log = function(s) 
+  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=56,className="Main",methodName="log"}));
 end
 
 Math.__name__ = true
