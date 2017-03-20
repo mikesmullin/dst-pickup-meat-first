@@ -550,13 +550,23 @@ Main.main = function()
   GLOBAL.require("debugkeys");
   GLOBAL.require("debugtools");
   rawset(GLOBAL, "PickMeatFirstGlobals", PickMeatFirstGlobals);
+  env.AddLevelPreInitAny(function() 
+    Main.log("woot! AddLevelPreInitAny()");
+  end);
+  env.AddTaskSetPreInitAny(function() 
+    Main.log("woot! AddTaskSetPreInitAny()");
+  end);
   env.AddSimPostInit(function() 
-    Main.log("woot!");
+    Main.log("woot! AddSimPostInit()");
+    Main.log(GLOBAL.AllRecipes.abigail_flower.builder_tag);
+  end);
+  env.AddGamePostInit(function() 
+    Main.log("woot! AddGamePostInit()");
     Main.log(GLOBAL.AllRecipes.abigail_flower.atlas);
   end);
 end
 Main.log = function(s) 
-  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=50,className="Main",methodName="log"}));
+  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=64,className="Main",methodName="log"}));
 end
 
 Math.__name__ = true

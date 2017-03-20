@@ -1,11 +1,9 @@
 package ;
 
 import dst.Global;
-import dst.Env;
-import dst.Types;
+import dst.EnvWorldGenMain;
 
 @:keep
-//@:native("_G.PickMeatFirstGlobals")
 class PickMeatFirstGlobals {
 	static public function test():Void {
 		Main.log(Global.debuglocals(2)); 
@@ -17,7 +15,7 @@ class Main
 	private static var isMaster : Bool = false;
 	//private static var PlayerController;
 
-	public static function main() 
+	public static function main()
 	{
 		Macro.dontStarvePreInit();
 		log("main() starting up...");
@@ -36,10 +34,26 @@ class Main
 		#end
 
 		untyped __lua__("rawset(GLOBAL, \"PickMeatFirstGlobals\", PickMeatFirstGlobals)");
-		
-		Env.AddSimPostInit(function()
+
+		EnvWorldGenMain.AddLevelPreInitAny(function()
 		{
-			log("woot!");
+			log("woot! AddLevelPreInitAny()");
+		});
+
+		EnvWorldGenMain.AddTaskSetPreInitAny(function()
+		{
+			log("woot! AddTaskSetPreInitAny()");
+		});
+
+		EnvWorldGenMain.AddSimPostInit(function()
+		{
+			log("woot! AddSimPostInit()");
+			log(Global.AllRecipes.abigail_flower.builder_tag);
+		});
+
+		EnvWorldGenMain.AddGamePostInit(function()
+		{
+			log("woot! AddGamePostInit()");
 			log(Global.AllRecipes.abigail_flower.atlas);
 		});
 	}
