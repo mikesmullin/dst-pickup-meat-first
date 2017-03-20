@@ -1,6 +1,6 @@
 package dst;
 
-import dst.Types.AllRecipes;
+import dst.Types.IAllRecipes;
 
 @:native("GLOBAL")
 extern class Global
@@ -11,5 +11,5 @@ extern class Global
 	static public function debuglocals(level : Int) : String;
 
 	// Asset Definitions
-	static public var AllRecipes : AllRecipes;
+	static public var AllRecipes : IAllRecipes;
 }

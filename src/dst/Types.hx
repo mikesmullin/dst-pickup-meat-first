@@ -1,18 +1,18 @@
 package dst;
 
-interface AllRecipes
+interface IAllRecipes
 {
-	public var abigail_flower : Recipe;
+	public var abigail_flower : IRecipe;
 }
 
-interface RecipeIngredient 
+interface IRecipeIngredient 
 {
 	public var amount: Int;
 	public var atlas: String;
 	public var type: String;
 }
 
-interface RecipeLevel
+interface IRecipeLevel
 {
 	public var ANCIENT: Int;
 	public var CARTOGRAPHY: Int;
@@ -24,21 +24,21 @@ interface RecipeLevel
 	public var SHADOW: Int;
 }
 
-interface RecipeTab 
+interface IRecipeTab 
 {
 	public var icon : String;
 	public var sort : Int;
 	public var str : String;
 }
 
-interface Recipe 
+interface IRecipe 
 {
 	public var atlas : String;
 	public var builder_tag : String;
 	public var character_ingredients : Dynamic;
 	public var image : String;
-	public var ingredients : Array<RecipeIngredient>; 
-	public var level : RecipeLevel;
+	public var ingredients : Array<IRecipeIngredient>; 
+	public var level : IRecipeLevel;
 	public var min_spacing : Float;
 	public var name	 : String;
 	public var nounlock : Bool;
@@ -46,6 +46,6 @@ interface Recipe
 	public var product : String;
 	public var rpc_id : Int;
 	public var sortkey : Int;
-	public var tab : RecipeTab;
+	public var tab : IRecipeTab;
 	public var tech_ingredients	: Dynamic;
 }

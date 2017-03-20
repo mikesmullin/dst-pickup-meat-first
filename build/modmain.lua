@@ -116,7 +116,7 @@ _hxClasses.Class = _hx_o({__fields__={__name__=true},__name__={"Class"}}); retur
 Enum = _hx_empty();
 
 local Array = _hx_empty() local Date = _hx_empty() local PickMeatFirstGlobals = _hx_empty() local Main = _hx_empty() local Math = _hx_empty() local Reflect = _hx_empty() local String = _hx_empty() local Std = _hx_empty() local StringBuf = _hx_empty() local dst = {}
-dst.AllRecipes = _hx_empty() dst.Recipe = _hx_empty() local haxe = {}
+dst.IAllRecipes = _hx_empty() dst.IRecipe = _hx_empty() local haxe = {}
 haxe.Log = _hx_empty() haxe.ds = {}
 haxe.ds.ArraySort = _hx_empty() haxe.io = {}
 haxe.io.Eof = _hx_empty() local lua = {}
@@ -771,20 +771,20 @@ StringBuf.prototype = _hx_anon(
   ,'__class__',  StringBuf
 )
 
-dst.AllRecipes.new = {}
-dst.AllRecipes.__name__ = true
+dst.IAllRecipes.new = {}
+dst.IAllRecipes.__name__ = true
 
-dst.AllRecipes.prototype = _hx_anon(
+dst.IAllRecipes.prototype = _hx_anon(
   
-  '__class__',  dst.AllRecipes
+  '__class__',  dst.IAllRecipes
 )
 
-dst.Recipe.new = {}
-dst.Recipe.__name__ = true
+dst.IRecipe.new = {}
+dst.IRecipe.__name__ = true
 
-dst.Recipe.prototype = _hx_anon(
+dst.IRecipe.prototype = _hx_anon(
   
-  '__class__',  dst.Recipe
+  '__class__',  dst.IRecipe
 )
 
 haxe.Log.new = {}
