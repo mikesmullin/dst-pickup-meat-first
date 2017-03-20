@@ -115,7 +115,7 @@ Class = (function()
 _hxClasses.Class = _hx_o({__fields__={__name__=true},__name__={"Class"}}); return _hxClasses.Class end)();
 Enum = _hx_empty();
 
-local Array = _hx_empty() local Date = _hx_empty() local PickMeatFirstGlobals = _hx_empty() local Main = _hx_empty() local Math = _hx_empty() local Reflect = _hx_empty() local String = _hx_empty() local Std = _hx_empty() local StringBuf = _hx_empty() local haxe = {}
+local Array = _hx_empty() local Date = _hx_empty() local AllRecipes = _hx_empty() local PickMeatFirstGlobals = _hx_empty() local Main = _hx_empty() local Recipe = _hx_empty() local Math = _hx_empty() local Reflect = _hx_empty() local String = _hx_empty() local Std = _hx_empty() local StringBuf = _hx_empty() local haxe = {}
 haxe.Log = _hx_empty() haxe.ds = {}
 haxe.ds.ArraySort = _hx_empty() haxe.io = {}
 haxe.io.Eof = _hx_empty() local lua = {}
@@ -533,11 +533,20 @@ Date.prototype = _hx_anon(
   ,'__class__',  Date
 )
 
+AllRecipes.new = {}
+AllRecipes.__name__ = true
+
+AllRecipes.prototype = _hx_anon(
+  
+  '__class__',  AllRecipes
+)
+
 PickMeatFirstGlobals.new = {}
 PickMeatFirstGlobals.__name__ = true
 PickMeatFirstGlobals.test = function() 
-	print(GLOBAL.dumptable(GLOBAL));
+  Main.log(GLOBAL.debuglocals(2));
 end
+
 
 Main.new = {}
 Main.__name__ = true
@@ -548,11 +557,23 @@ Main.main = function()
   GLOBAL.require("debugkeys");
   GLOBAL.require("debugtools");
   rawset(GLOBAL, "PickMeatFirstGlobals", PickMeatFirstGlobals);
+  env.AddSimPostInit(function() 
+    Main.log("woot!");
+    Main.log(GLOBAL.AllRecipes.abigail_flower.atlas);
+  end);
 end
 Main.log = function(s) 
-  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=56,className="Main",methodName="log"}));
+  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=126,className="Main",methodName="log"}));
 end
 
+
+Recipe.new = {}
+Recipe.__name__ = true
+
+Recipe.prototype = _hx_anon(
+  
+  '__class__',  Recipe
+)
 Math.__name__ = true
 
 Math.new = {}
