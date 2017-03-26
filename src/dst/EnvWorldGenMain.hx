@@ -101,8 +101,7 @@ extern class EnvWorldGenMain
 	
 	// Disorganized
 
-	static public var postinitfns : Dynamic;
-	static public var postinitdata : Dynamic;
+	static public var postinitfns : IPostInitFns;
 
 	static public function AddLocation (arg1 : Dynamic, extra:Array<Expr>) : Void;
 	static public function AddLevel (arg1 : Dynamic, arg2 : Dynamic, extra:Array<Expr>) : Void;
@@ -119,7 +118,7 @@ extern class EnvWorldGenMain
 	
 }
 
-interface IPostInitFns implements Dynamic
+private interface IPostInitFns implements Dynamic
 {
 	public var LevelPreInit : Map<Dynamic, Function>;
 	public var LevelPreInitAny : Map<Dynamic, Function>;

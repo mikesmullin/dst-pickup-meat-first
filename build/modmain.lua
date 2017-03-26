@@ -165,7 +165,7 @@ Array.prototype = _hx_anon(
     do return _g end
   end,
   'join', function(self,sep) 
-    local sb = StringBuf.new();
+    local sb_b = _hx_empty();
     local first = true;
     
     local _gthis = self;
@@ -182,12 +182,12 @@ Array.prototype = _hx_anon(
       if (first) then 
         first = false;
       else
-        sb:add(sep);
+        _G.table.insert(sb_b,Std.string(sep));
       end;
-      sb:add(Std.string(i));
+      _G.table.insert(sb_b,Std.string(Std.string(i)));
     
     end;
-    do return _G.table.concat(sb.b) end
+    do return _G.table.concat(sb_b) end
   end,
   'pop', function(self) 
     if ((self.length) == (0)) then 
@@ -566,7 +566,7 @@ Main.main = function()
   end);
 end
 Main.log = function(s) 
-  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=64,className="Main",methodName="log"}));
+  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=65,className="Main",methodName="log"}));
 end
 
 Math.__name__ = true
