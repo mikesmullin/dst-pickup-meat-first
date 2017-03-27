@@ -1,8 +1,7 @@
 package dst;
 
-import lua.Map;
 import haxe.Constraints.Function;
-import haxe.macro.Expr;
+import haxe.extern.Rest;
 
 @:native("env")
 extern class EnvWorldGenMain
@@ -73,7 +72,7 @@ extern class EnvWorldGenMain
 	 * class is returned directly from the file. The initFn should have the
 	 * same signature as the class's constructor.
 	 */
-	 static public function AddClassPostConstruct(pathToFile : String, initFn : Void->Void) : Void;
+	 static public function AddClassPostConstruct(pathToFile : String, postFn : Dynamic -> Void) : Void;
 
 	/**
 	 * Use this to run a function after a class's constructor runs, when that
@@ -103,12 +102,12 @@ extern class EnvWorldGenMain
 
 	static public var postinitfns : IPostInitFns;
 
-	static public function AddLocation (arg1 : Dynamic, extra:Array<Expr>) : Void;
-	static public function AddLevel (arg1 : Dynamic, arg2 : Dynamic, extra:Array<Expr>) : Void;
-	static public function AddTaskSet (arg1 : Dynamic, extra:Array<Expr>) : Void;
-	static public function AddTask (arg1 : Dynamic, extra:Array<Expr>) : Void;
-	static public function AddRoom (arg1 : Dynamic, extra:Array<Expr>) : Void;
-	static public function AddStartLocation (arg1 : Dynamic, extra:Array<Expr>) : Void;
+	static public function AddLocation (arg1 : Dynamic, extras : Rest<Dynamic>) : Void;
+	static public function AddLevel (arg1 : Dynamic, arg2 : Dynamic, extras : Rest<Dynamic>) : Void;
+	static public function AddTaskSet (arg1 : Dynamic, extras : Rest<Dynamic>) : Void;
+	static public function AddTask (arg1 : Dynamic, extras : Rest<Dynamic>) : Void;
+	static public function AddRoom (arg1 : Dynamic, extras : Rest<Dynamic>) : Void;
+	static public function AddStartLocation (arg1 : Dynamic, extras : Rest<Dynamic>) : Void;
 
 	@:deprecated
 	static public function AddGameMode (gameMode: String, gameModeText : String) : Void;

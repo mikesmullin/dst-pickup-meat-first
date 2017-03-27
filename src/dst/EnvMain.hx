@@ -1,6 +1,6 @@
 package dst;
 import haxe.Constraints.Function;
-import haxe.macro.Expr;
+import haxe.extern.Rest;
 
 @:native("env")
 extern class EnvMain
@@ -33,15 +33,15 @@ extern class EnvMain
 	static public function AddCookerRecipe(cooker : Dynamic, recipe : Dynamic) : Void;
 	static public function AddModCharacter(name : String, gender : Dynamic) : Void;
 	static public function RemoveDefaultCharacter (name : String) : Void;
-	static public function AddRecipe(arg1 : Dynamic, extra:Array<Expr>) : Void;
-	static public function Recipe(extra:Array<Expr>) : Void;
+	static public function AddRecipe(arg1 : Dynamic, extras : Rest<Dynamic>) : Void;
+	static public function Recipe(extras : Rest<Dynamic>) : Void;
 
 	static public function LoadPOFile(path : String, lang : String) : Void;
 	static public function RemapSoundEvent(name : String, new_name : String) : Void;
 	static public function AddReplicableComponent(name : String) : Void;
 	static public function AddModRPCHandler( namespace : String, name : String, fn : Function) : Void;
 	static public function GetModRPCHandler( namespace : String, name : String ) : Void;
-	static public function SendModRPCToServer( id_table : Dynamic, extra:Array<Expr> ) : Void;
+	static public function SendModRPCToServer( id_table : Dynamic, extras : Rest<Dynamic> ) : Void;
 	static public function GetModRPC( namespace : String, name : String ) : Void;
 	static public function SetModHUDFocus(focusid : Int, hasfocus : Bool) : Void;
 	static public function AddUserCommand(command_name : String, data : Dynamic) : Void;

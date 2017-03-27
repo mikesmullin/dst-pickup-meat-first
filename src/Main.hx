@@ -3,11 +3,16 @@ package ;
 import dst.EnvMain;
 import dst.Global;
 import dst.EnvWorldGenMain;
+import dst.components.PlayerController;
+import lua.Lua;
+import lua.MyPairTools;
+import lua.MyStringTools;
+import lua.Table;
 
 @:keep
 class PickMeatFirstGlobals {
 	static public function test():Void {
-		Main.log(Global.debuglocals(2)); 
+		Main.log(Global.debuglocals(2));
 	}
 }
 
@@ -29,33 +34,78 @@ class Main
 			// - 0: jump to caves.
 			Global.CHEATS_ENABLED = true;
 			Global.require("debugkeys");
-			
-			// enable Debug Tools methods
 			Global.require("debugtools");
+			Global.require("debughelpers");
 		#end
 
 		untyped __lua__("rawset(GLOBAL, \"PickMeatFirstGlobals\", PickMeatFirstGlobals)");
 
-		EnvWorldGenMain.AddLevelPreInitAny(function()
+		var CONES = lua.Table.create({ pinecone: 1, acorn: 1, twiggy_nut: 1 });
+		var isMaster : Bool = false;
+		var playerController : PlayerController;
+		
+		EnvWorldGenMain.AddClassPostConstruct("components/playercontroller", function(ctrl : PlayerController)
 		{
-			log("woot! AddLevelPreInitAny()");
-		});
-
-		EnvWorldGenMain.AddTaskSetPreInitAny(function()
-		{
-			log("woot! AddTaskSetPreInitAny()");
-		});
-
-		EnvWorldGenMain.AddSimPostInit(function()
-		{
-			log("woot! AddSimPostInit()");
-			log(Global.AllRecipes.abigail_flower.builder_tag);
-		});
-
-		EnvWorldGenMain.AddGamePostInit(function()
-		{
-			log("woot! AddGamePostInit()");
-			log(Global.AllRecipes.abigail_flower.atlas);
+			log("woot! AddClassPostConstruct()");
+			
+			if (null == Global.ThePlayer) return; // if local player doesn't exist yet
+			if (Global.ThePlayer.userid != ctrl.inst.userid) return; // if player controller is not for local player
+			//if ("woodie" != ctrl.inst.prefab) return; // must be a Woodie // not anymore! credit: Cordae
+			isMaster = Global.ThePlayer.ismastersim; // if not hosting, we must send RPCs
+			playerController = ctrl;
+			
+			var getActionButtonAction;
+			//= ctrl.GetActionButtonAction;
+			untyped __lua__("getActionButtonAction = ctrl.GetActionButtonAction");
+			
+			var interceptAction = function(self : PlayerController, bufferedAction : IBufferedAction) : Bool
+			{
+				log("interceptAction()");
+				log("  self: " + Lua.tostring(self));
+				log("  bufferedAction: " + Lua.tostring(bufferedAction));
+				if (null == bufferedAction) return false; // don't intercept
+				log("  bufferedAction.action: " + Lua.tostring(bufferedAction.action));
+				if (Global.ACTIONS.PICKUP != bufferedAction.action) return false;  // don't intercept
+				// TODO: difference between PICKUP and PICK? PROBABLY SUPPORT BOTH
+				var playerWorldPos = Global.ThePlayer.Transform.GetWorldPosition();
+				log("x: " + playerWorldPos.x + ", y: " + playerWorldPos.y +", z: " + playerWorldPos.z);
+				var items = Global.TheSim.FindEntities(playerWorldPos.x, playerWorldPos.y, playerWorldPos.z, self.directwalking ? 3 : 6, null, [Tags.INLIMBO]);
+				
+				for (p1 in new PairsIterator(CONES))
+				{
+					var target = p1.index;
+					for (p2 in new PairsIterator(items))
+					{
+						var item = p2.value;
+						var itemWorldPos = item.Transform.GetWorldPosition();
+						log(MyStringTools.format("%s {%2.2f, %2.2f, %2.2f}", Lua.tostring(item), itemWorldPos.x, itemWorldPos.y, itemWorldPos.z));
+						if (target == item.prefab)
+						{
+							//Global.DumpEntity(item);
+							log("  item found!");
+							return true;
+						}
+					}
+					
+				}
+				return false;
+			};
+			
+			log("replacing GetActionButtonAction");
+			var wrapper = function(self : Dynamic, forceTarget : Dynamic) : Dynamic 
+			{
+				log("replacement GetActionButtonAction");
+				log("  self: " + Lua.tostring(self));
+				log("  forceTarget: " + Lua.tostring(forceTarget));
+				var bufferedAction = getActionButtonAction(self, forceTarget);
+				var result : Bool = interceptAction(self, bufferedAction);
+				if (!result)
+				{
+					return bufferedAction;
+				}
+				return null;
+			};
+			untyped __lua__("ctrl.GetActionButtonAction = wrapper");
 		});
 	}
 	
