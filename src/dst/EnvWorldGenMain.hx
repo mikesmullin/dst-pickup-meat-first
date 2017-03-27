@@ -10,7 +10,7 @@ extern class EnvWorldGenMain
 	// -- Runtime
 	static public var TUNING : Dynamic;
 	
-	// -- Worldgem
+	// -- Worldgen
 	static public var GROUND : Dynamic;
 	static public var LOCKS : Dynamic;
 	static public var KEYS : Dynamic;
