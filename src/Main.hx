@@ -10,8 +10,10 @@ import lua.MyStringTools;
 import lua.Table;
 
 @:keep
-class PickMeatFirstGlobals {
-	static public function test():Void {
+class PickMeatFirstGlobals
+{
+	static public function test():Void
+	{
 		Main.log(Global.debuglocals(2));
 	}
 }
@@ -25,7 +27,7 @@ class Main
 	{
 		Macro.dontStarvePreInit();
 		log("main() starting up...");
-		
+
 		#if debug
 			log("debug mode is enabled.");
 			// enable Debug Keys feature
@@ -43,21 +45,21 @@ class Main
 		var CONES = lua.Table.create({ pinecone: 1, acorn: 1, twiggy_nut: 1 });
 		var isMaster : Bool = false;
 		var playerController : PlayerController;
-		
+
 		EnvWorldGenMain.AddClassPostConstruct("components/playercontroller", function(ctrl : PlayerController)
 		{
 			log("woot! AddClassPostConstruct()");
-			
+
 			if (null == Global.ThePlayer) return; // if local player doesn't exist yet
 			if (Global.ThePlayer.userid != ctrl.inst.userid) return; // if player controller is not for local player
 			//if ("woodie" != ctrl.inst.prefab) return; // must be a Woodie // not anymore! credit: Cordae
 			isMaster = Global.ThePlayer.ismastersim; // if not hosting, we must send RPCs
 			playerController = ctrl;
-			
+
 			var getActionButtonAction;
 			//= ctrl.GetActionButtonAction;
 			untyped __lua__("getActionButtonAction = ctrl.GetActionButtonAction");
-			
+
 			var interceptAction = function(self : PlayerController, bufferedAction : IBufferedAction) : Bool
 			{
 				log("interceptAction()");
@@ -70,7 +72,7 @@ class Main
 				var playerWorldPos = Global.ThePlayer.Transform.GetWorldPosition();
 				log("x: " + playerWorldPos.x + ", y: " + playerWorldPos.y +", z: " + playerWorldPos.z);
 				var items = Global.TheSim.FindEntities(playerWorldPos.x, playerWorldPos.y, playerWorldPos.z, self.directwalking ? 3 : 6, null, [Tags.INLIMBO]);
-				
+
 				for (p1 in new PairsIterator(CONES))
 				{
 					var target = p1.index;
@@ -86,13 +88,13 @@ class Main
 							return true;
 						}
 					}
-					
+
 				}
 				return false;
 			};
-			
+
 			log("replacing GetActionButtonAction");
-			var wrapper = function(self : Dynamic, forceTarget : Dynamic) : Dynamic 
+			var wrapper = function(self : Dynamic, forceTarget : Dynamic) : Dynamic
 			{
 				log("replacement GetActionButtonAction");
 				log("  self: " + Lua.tostring(self));
@@ -108,11 +110,11 @@ class Main
 			untyped __lua__("ctrl.GetActionButtonAction = wrapper");
 		});
 	}
-	
+
 	public static function log(s : String)
 	{
 		#if debug
-			trace("MikesPlugin: " + s);
+		trace("MikesPlugin: " + s);
 		#end
 	}
 }
