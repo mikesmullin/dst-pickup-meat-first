@@ -3,6 +3,7 @@ package dst.components;
 interface PlayerController
 {
 	public dynamic function GetActionButtonAction(self : Dynamic, force_target : Dynamic) : Dynamic;
+	public function DoAction(act : BufferedAction) : Void;
 	public var inst : IPlayerControllerInst;
 	public var directwalking : Bool;
 }
