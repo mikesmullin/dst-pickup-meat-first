@@ -20,9 +20,6 @@ class PickMeatFirstGlobals
 
 class Main
 {
-	private static var isMaster : Bool = false;
-	//private static var PlayerController;
-
 	public static function main()
 	{
 		Macro.dontStarvePreInit();
@@ -57,6 +54,7 @@ class Main
 			playerController = ctrl;
 
 			var getActionButtonAction;
+			// TODO: solve problem with generator losing self definition    local getActionButtonAction = _hx_bind(ctrl,ctrl.GetActionButtonAction);   
 			//= ctrl.GetActionButtonAction;
 			untyped __lua__("getActionButtonAction = ctrl.GetActionButtonAction");
 
@@ -80,9 +78,9 @@ class Main
 					{
 						var item = p2.value;
 						var itemWorldPos = item.Transform.GetWorldPosition();
-						log(MyStringTools.format("%s {%2.2f, %2.2f, %2.2f}", Lua.tostring(item), itemWorldPos.x, itemWorldPos.y, itemWorldPos.z));
 						if (target == item.prefab)
 						{
+							log(MyStringTools.format("%s {%2.2f, %2.2f, %2.2f}", Lua.tostring(item), itemWorldPos.x, itemWorldPos.y, itemWorldPos.z));
 							//Global.DumpEntity(item);
 							log("  item found!");
 							return true;
@@ -107,6 +105,7 @@ class Main
 				}
 				return null;
 			};
+			// TODO: solve problem with generator losing self definition      ctrl.GetActionButtonAction = _hx_funcToField(wrapper);
 			untyped __lua__("ctrl.GetActionButtonAction = wrapper");
 		});
 	}

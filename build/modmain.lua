@@ -186,6 +186,7 @@ Main.main = function()
           local _hx_3_itemWorldPos_x, _hx_3_itemWorldPos_y, _hx_3_itemWorldPos_z = item.Transform:GetWorldPosition();
           Main.log(string.format("%s {%2.2f, %2.2f, %2.2f}",_G.tostring(item),_hx_3_itemWorldPos_x,_hx_3_itemWorldPos_y,_hx_3_itemWorldPos_z));
           if (target == item.prefab) then 
+            GLOBAL.DumpEntity(item);
             Main.log("  item found!");
             do return true end;
           end;
@@ -209,7 +210,7 @@ Main.main = function()
   end);
 end
 Main.log = function(s) 
-  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=115,className="Main",methodName="log"}));
+  haxe.Log.trace("MikesPlugin: " .. s,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=114,className="Main",methodName="log"}));
 end
 
 String.new = {}

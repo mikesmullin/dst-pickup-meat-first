@@ -12,6 +12,7 @@ extern class Global
 	static public var CHEATS_ENABLED : Bool; // = false;
 	static public function require(file : String) : Void;
 	static public function debuglocals(level : Int) : String;
+	static public function DumpEntity(entity : Entity) : Void;
 
 	// Asset Definitions
 	static public var AllRecipes : IAllRecipes;
