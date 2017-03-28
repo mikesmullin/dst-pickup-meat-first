@@ -158,12 +158,12 @@ Main.main = function()
       if (nil == bufferedAction) then 
         do return false end;
       end;
-      if (GLOBAL.ACTIONS.PICKUP ~= bufferedAction.action) then 
+      if ((GLOBAL.ACTIONS.PICKUP ~= bufferedAction.action) and (GLOBAL.ACTIONS.PICK ~= bufferedAction.action)) then 
         do return false end;
       end;
       local _hx_1_playerWorldPos_x, _hx_1_playerWorldPos_y, _hx_1_playerWorldPos_z = GLOBAL.ThePlayer.Transform:GetWorldPosition();
       Main.log("x: " .. _hx_1_playerWorldPos_x .. ", y: " .. _hx_1_playerWorldPos_y .. ", z: " .. _hx_1_playerWorldPos_z);
-      local items = GLOBAL.TheSim:FindEntities(_hx_1_playerWorldPos_x,_hx_1_playerWorldPos_y,_hx_1_playerWorldPos_z,40,_hx_tab_array({[0]=dst.Tags.EDIBLE_MEAT }, 1),_hx_tab_array({[0]=dst.Tags.INLIMBO }, 1));
+      local items = GLOBAL.TheSim:FindEntities(_hx_1_playerWorldPos_x,_hx_1_playerWorldPos_y,_hx_1_playerWorldPos_z,15,_hx_tab_array({[0]=dst.Tags.EDIBLE_MEAT }, 1),_hx_tab_array({[0]=dst.Tags.INLIMBO }, 1));
       local p = lua.PairsIterator.new(items);
       while (p:hasNext()) do 
         local p1 = p:next();

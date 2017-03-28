@@ -64,11 +64,12 @@ class Main
 				log("  bufferedAction: " + Lua.tostring(bufferedAction));
 				if (null == bufferedAction) return false; // don't intercept
 				//log("  bufferedAction.action: " + Lua.tostring(bufferedAction.action));
-				if (Global.ACTIONS.PICKUP != bufferedAction.action) return false;  // don't intercept
+				if (Global.ACTIONS.PICKUP != bufferedAction.action &&
+					Global.ACTIONS.PICK != bufferedAction.action) return false;  // don't intercept
 				// TODO: difference between PICKUP and PICK? PROBABLY SUPPORT BOTH
 				var playerWorldPos = Global.ThePlayer.Transform.GetWorldPosition();
 				log("x: " + playerWorldPos.x + ", y: " + playerWorldPos.y +", z: " + playerWorldPos.z);
-				var items = Global.TheSim.FindEntities(playerWorldPos.x, playerWorldPos.y, playerWorldPos.z, 40, [Tags.EDIBLE_MEAT], [Tags.INLIMBO]);
+				var items = Global.TheSim.FindEntities(playerWorldPos.x, playerWorldPos.y, playerWorldPos.z, 15, [Tags.EDIBLE_MEAT], [Tags.INLIMBO]);
 
 				for (p in new PairsIterator(items))
 				{

@@ -128,6 +128,7 @@ extern class Position
 interface IActions
 {
 	public var PICKUP : Dynamic;
+	public var PICK : Dynamic;
 }
 
 class Tags
